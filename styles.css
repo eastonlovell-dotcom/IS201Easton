@@ -1,0 +1,89 @@
+/* FONT + BASE COLORS */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+    color: #1f2937;
+    background: linear-gradient(to right, #eef2f3, #dfe9f3);
+    margin: 0;
+    line-height: 1.6;
+}
+
+h1, h2 {
+    color: #1e40af;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* HEADER */
+.header {
+    background: #1f2937;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+/* NAVIGATION */
+.nav {
+    background: white;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.nav a {
+    margin: 0 20px;
+    text-decoration: none;
+    color: #1f2937;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav a:hover {
+    color: #3b82f6;
+}
+
+/* CONTAINER - Main layout wrapper */
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* CARDS - Multiple content blocks */
+.card {
+    background: white;
+    padding: 25px;
+    margin: 25px 0;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* Additional card variations */
+.card h2 {
+    color: #1e3a8a;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 10px;
+}
+
+/* IMAGE */
+img {
+    width: 100%;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+/* VIDEO / IFRAME */
+iframe {
+    display: block;
+    margin: 20px auto;
+    border-radius: 10px;
+    max-width: 100%;
+}
+
+/* FOOTER */
+.footer {
+    background: #1f2937;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
+}

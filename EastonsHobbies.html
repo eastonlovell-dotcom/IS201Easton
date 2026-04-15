@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easton's Hobbies | Outdoor Adventures</title>
+    
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --secondary: #2e8b57;
+            --accent: #f4a261;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7f9;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary), #0f3d4f);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav ul {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+        
+        .nav a {
+            display: block;
+            padding: 1.25rem 1.8rem;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .nav a:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        /* Home Button Styling */
+        .home-btn {
+            background-color: var(--primary);
+            color: white !important;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem !important;
+            margin: 0 12px;
+            font-weight: 700;
+        }
+        
+        .home-btn:hover {
+            background-color: #0f3d4f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .card h2 {
+            background: var(--primary);
+            color: white;
+            padding: 1.25rem 1.75rem;
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .card-content {
+            padding: 1.75rem;
+        }
+        
+        .card ol {
+            padding-left: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card li {
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+        }
+        
+        .card ul {
+            padding-left: 1.5rem;
+            margin-top: 0.4rem;
+            font-size: 0.95rem;
+            color: #555;
+        }
+        
+        .card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .youtube-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .youtube-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.3rem; }
+            .nav ul { flex-direction: column; }
+            .container { grid-template-columns: 1fr; padding: 0 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <h1>Easton's Outdoor Adventures</h1>
+    <p>Mountain Biking • Skiing • Hiking in Utah & Beyond</p>
+</header>
+
+<nav class="nav">
+    <ul>
+        <li><a href="Resume.html" class="home-btn">Resume</a></li>
+        <li><a href="#lists">Hobbies</a></li>
+        <li><a href="#media">Media</a></li>
+        <li><a href="adventure-planner.html" target="_blank">🚵 Adventure Planner + Trail Game</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+
+    <!-- Hobbies Card -->
+    <div class="card" id="lists">
+        <h2>My Favorite Hobbies</h2>
+        <div class="card-content">
+            <ol>
+                <li><strong>Mountain Biking</strong>
+                    <ul>
+                        <li>Gooseberry Mesa, Moab UT</li>
+                        <li>Zen Trail, St. George UT</li>
+                        <li>Levitate, Draper UT</li>
+                    </ul>
+                </li>
+                <li><strong>Skiing</strong>
+                    <ul>
+                        <li>Alta</li>
+                        <li>Snow Basin</li>
+                        <li>Jackson Hole</li>
+                    </ul>
+                </li>
+                <li><strong>Hiking</strong>
+                    <ul>
+                        <li>Zion National Park</li>
+                        <li>Arches National Park</li>
+                        <li>Bryce Canyon</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Media Card -->
+    <div class="card" id="media">
+        <h2>Media & Inspiration</h2>
+        <div class="card-content">
+            <img src="https://npca.s3.amazonaws.com/images/8566/5a7c0399-3d5b-455e-97cd-40ca4bdb8296-banner.jpg" 
+                 alt="Utah Landscape">
+            
+            <div class="youtube-container">
+                <iframe src="https://www.youtube.com/embed/s64OLTyvdF8" 
+                        title="YouTube video player" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableau Card -->
+    <div class="card">
+        <h2>Interactive Visualization</h2>
+        <div class="card-content">
+            <iframe 
+                src="https://public.tableau.com/views/TopSkiResorts/BestWeek?:embed=y&:showVizHome=no&:toolbar=no"
+                width="100%" 
+                height="520"
+                style="border:none; border-radius: 8px;">
+            </iframe>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 Easton's Scratch Page • Built with passion for the outdoors</p>
+</footer>
+
+</body>
+</html>

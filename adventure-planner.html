@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easton's Adventure Planner</title>
+    
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --accent: #f4a261;
+            --success: #2e8b57;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0f3d4f, #2e8b57);
+            color: white;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        h1 { 
+            margin: 0; 
+            font-size: 2.5rem; 
+        }
+        
+        /* Home Button Styling */
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: white;
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .home-btn:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.95);
+            color: #212529;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        select, button, input {
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            width: 100%;
+            font-size: 1rem;
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        button:hover { 
+            background: #0f3d4f; 
+        }
+        
+        #result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            min-height: 100px;
+        }
+        
+        canvas {
+            border: 3px solid #333;
+            border-radius: 12px;
+            background: #87CEEB;
+            display: block;
+            margin: 1rem auto;
+        }
+        
+        .score {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+        
+        @media (max-width: 768px) {
+            .container { 
+                grid-template-columns: 1fr; 
+            }
+            .home-btn {
+                position: static;
+                display: inline-block;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <!-- Changed link to EastonsHobbies.html -->
+    <a href="EastonsHobbies.html" class="home-btn">🏠 Home</a>
+    
+    <h1>🌲 Easton's Utah Adventure Planner</h1>
+    <p>Plan your next ride, ski, or hike + play the Trail Runner game!</p>
+</header>
+
+<div class="container">
+
+    <!-- Planner Section -->
+    <div class="card">
+        <h2>Plan Your Adventure</h2>
+        
+        <label>Choose Activity:</label>
+        <select id="activity">
+            <option value="Mountain Biking">Mountain Biking</option>
+            <option value="Skiing">Skiing</option>
+            <option value="Hiking">Hiking</option>
+        </select>
+
+        <label>Choose Location:</label>
+        <select id="location">
+            <option value="Gooseberry Mesa, Moab">Gooseberry Mesa, Moab</option>
+            <option value="Zen Trail, St. George">Zen Trail, St. George</option>
+            <option value="Levitate, Draper">Levitate, Draper</option>
+            <option value="Alta">Alta</option>
+            <option value="Snow Basin">Snow Basin</option>
+            <option value="Jackson Hole">Jackson Hole</option>
+            <option value="Zion National Park">Zion National Park</option>
+            <option value="Arches National Park">Arches National Park</option>
+            <option value="Bryce Canyon">Bryce Canyon</option>
+        </select>
+
+        <label>Difficulty (1-10):</label>
+        <input type="range" id="difficulty" min="1" max="10" value="5">
+
+        <button onclick="planAdventure()">Generate Plan</button>
+
+        <div id="result"></div>
+    </div>
+
+    <!-- Game Section -->
+    <div class="card">
+        <h2>🏔️ Trail Runner Game</h2>
+        <p>Dodge obstacles on the trail! Use <strong>← → Arrow Keys</strong> or <strong>A D</strong></p>
+        <canvas id="gameCanvas" width="400" height="300"></canvas>
+        <p>Score: <span id="gameScore" class="score">0</span> | High Score: <span id="highScore" class="score">0</span></p>
+        <button onclick="startGame()">Start / Restart Game</button>
+    </div>
+
+</div>
+
+<script>
+// Planner Logic
+function planAdventure() {
+    const activity = document.getElementById('activity').value;
+    const location = document.getElementById('location').value;
+    const difficulty = parseInt(document.getElementById('difficulty').value);
+    
+    const times = { "Mountain Biking": "2-4 hours", "Skiing": "4-6 hours", "Hiking": "3-5 hours" };
+    const tips = {
+        "Mountain Biking": "Bring plenty of water and check tire pressure!",
+        "Skiing": "Layers are key — Utah weather changes fast.",
+        "Hiking": "Start early to avoid afternoon heat."
+    };
+    
+    const score = Math.round( (difficulty * 8) + (Math.random() * 30) + 50 );
+    
+    let html = `<strong>${activity} at ${location}</strong><br>`;
+    html += `Estimated Time: ${times[activity]}<br>`;
+    html += `Adventure Score: <span style="color:#2e8b57; font-size:1.3em;">${score}/100</span><br><br>`;
+    html += `<em>Tip:</em> ${tips[activity]}<br>`;
+    html += `<small>Difficulty selected: ${difficulty}/10</small>`;
+    
+    document.getElementById('result').innerHTML = html;
+}
+
+// Trail Runner Game (Simple Canvas Endless Runner)
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+let playerX = 150, playerY = 220, velocity = 0;
+let obstacles = [], score = 0, gameRunning = false, highScore = localStorage.getItem('trailHighScore') || 0;
+
+document.getElementById('highScore').textContent = highScore;
+
+const keys = {};
+window.addEventListener('keydown', e => keys[e.key] = true);
+window.addEventListener('keyup', e => keys[e.key] = false);
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Ground
+    ctx.fillStyle = '#8B4513';
+    ctx.fillRect(0, 250, canvas.width, 50);
+    
+    // Player (simple bike/hiker icon)
+    ctx.fillStyle = '#1a5f7a';
+    ctx.fillRect(playerX, playerY, 40, 30); // body
+    ctx.fillStyle = '#333';
+    ctx.beginPath();
+    ctx.arc(playerX+10, playerY+30, 8, 0, Math.PI*2); // wheel
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(playerX+30, playerY+30, 8, 0, Math.PI*2);
+    ctx.fill();
+    
+    // Obstacles
+    ctx.fillStyle = '#555';
+    for (let obs of obstacles) {
+        ctx.fillRect(obs.x, obs.y, 25, 25);
+    }
+    
+    // Score
+    document.getElementById('gameScore').textContent = Math.floor(score);
+}
+
+function update() {
+    if (!gameRunning) return;
+    
+    score += 0.2;
+    
+    // Player movement
+    if ((keys['ArrowLeft'] || keys['a'] || keys['A']) && playerX > 10) playerX -= 6;
+    if ((keys['ArrowRight'] || keys['d'] || keys['D']) && playerX < 350) playerX += 6;
+    
+    // Spawn obstacles
+    if (Math.random() < 0.03) {
+        obstacles.push({ x: Math.random() * 350, y: 0 });
+    }
+    
+    // Move obstacles
+    for (let i = 0; i < obstacles.length; i++) {
+        obstacles[i].y += 5;
+        if (obstacles[i].y > 280) obstacles.splice(i, 1);
+        
+        // Collision
+        if (obstacles[i] && 
+            playerX < obstacles[i].x + 25 && 
+            playerX + 40 > obstacles[i].x && 
+            playerY < obstacles[i].y + 25 && 
+            playerY + 30 > obstacles[i].y) {
+            endGame();
+            return;
+        }
+    }
+    
+    draw();
+    requestAnimationFrame(update);
+}
+
+function startGame() {
+    obstacles = [];
+    score = 0;
+    playerX = 150;
+    gameRunning = true;
+    update();
+}
+
+function endGame() {
+    gameRunning = false;
+    if (score > highScore) {
+        highScore = Math.floor(score);
+        localStorage.setItem('trailHighScore', highScore);
+        document.getElementById('highScore').textContent = highScore;
+    }
+    alert(`Game Over! Your score: ${Math.floor(score)}\nHigh Score: ${highScore}`);
+}
+
+// Start with a welcome draw
+draw();
+</script>
+
+</body>
+</html>
